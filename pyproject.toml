@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hivemind-json-db-plugin"
+dynamic = ["version"]
+description = "JSON-file database plugin for hivemind-core"
+license = { text = "Apache-2.0" }
+authors = [{ name = "jarbasAi", email = "jarbasai@mailfence.com" }]
+requires-python = ">=3.9"
+dependencies = [
+    "hivemind-plugin-manager>=0.5.0,<1.0.0",
+    "json_database>=0.9.0",
+    "ovos-utils",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+]
+dev = [
+    "pytest",
+]
+
+[project.urls]
+Homepage = "https://github.com/JarbasHiveMind/hivemind-json-db-plugin"
+
+[project.entry-points."hivemind.database"]
+"hivemind-json-db-plugin" = "hivemind_json_database:JsonDB"
+
+[tool.setuptools.dynamic]
+version = {attr = "hivemind_json_database.version.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["hivemind_json_database*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

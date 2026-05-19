@@ -1,0 +1,20 @@
+name: Build Tests
+
+on:
+  pull_request:
+    branches: [dev, master, main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: OpenVoiceOS/gh-automations/.github/workflows/build-tests.yml@dev
+    secrets: inherit
+    with:
+      python_versions: '["3.10", "3.11", "3.12", "3.13", "3.14"]'
+      install_extras: ''
+      test_path: 'tests'
+      pr_comment: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
+      # TEMPORARY: hivemind-plugin-manager#27 ships the SCHEMA_VERSION
+      # constant + migrate() hook this migration relies on. Drop once
+      # the next HPM release is on PyPI.
+      pre_install_pip: '"hivemind-plugin-manager @ git+https://github.com/JarbasHiveMind/hivemind-plugin-manager@feat/policy-plugins"'
