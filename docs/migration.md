@@ -27,13 +27,10 @@ For each stored client record:
   folded into the record's `metadata` dict via `setdefault` — an
   explicit `metadata` value is never clobbered. The top-level keys
   are then dropped.
-- **`message_blacklist`** is **purged outright**, with no
-  carry-forward (both the top-level key and any pre-existing
-  `metadata["message_blacklist"]` from an earlier migration attempt
-  are stripped). The field was a 2024-12-20 design mistake that
-  contradicted the deny-by-default whitelist model and was removed
-  from the `Client` data model in HPM. See the HPM PR #27 thread for
-  the full audit.
+- **`message_blacklist`** is purged outright (both the top-level key
+  and any pre-existing `metadata["message_blacklist"]` from an
+  earlier migration run are stripped). The field is not part of the
+  `Client` data model.
 
 After migration, the on-disk shape is:
 
