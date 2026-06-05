@@ -1,12 +1,12 @@
 # Changelog
 
-## [0.0.2a1](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.2a1) (2026-05-19)
+## [0.0.3a1](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.3a1) (2026-06-05)
 
-[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.1...0.0.2a1)
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.2...0.0.3a1)
 
 **Merged pull requests:**
 
-- ci: drop stray tests.yml [\#5](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/5) ([JarbasAl](https://github.com/JarbasAl))
+- test\(e2e\): migration → policy → session \(real JsonDB through hivescope\) [\#7](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/7) ([JarbasAl](https://github.com/JarbasAl))
 
 
 
