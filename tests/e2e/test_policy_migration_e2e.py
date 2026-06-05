@@ -140,6 +140,11 @@ def test_migrated_skill_blacklist_reaches_session():
         "module": _JSON_PLUGIN,
         _JSON_PLUGIN: {"name": "clients", "subfolder": "hivemind-core"},
     })
+    # hivemind-plugin-manager bundles a default JsonDB under the same
+    # ``hivemind-json-db-plugin`` entry-point name, which can win the factory
+    # lookup. Pin this repo's JsonDB explicitly so we exercise its migration.
+    from hivemind_json_database import JsonDB
+    cdb.db = JsonDB(name="clients", subfolder="hivemind-core")
     cdb.db._db.store()
 
     b = TopologyBuilder()
