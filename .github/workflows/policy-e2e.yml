@@ -21,4 +21,6 @@ jobs:
           "hivemind-core==4.3.0a2"
           "hivemind-ovos-agent-plugin==0.2.0a1"
           "hivemind-plugin-manager==0.6.0a1"
+      # hivemind-core pulls the published json plugin; restore the editable build
+      - run: pip install -e . --no-deps
       - run: pytest tests/e2e/test_policy_migration_e2e.py -q -p no:cacheprovider
