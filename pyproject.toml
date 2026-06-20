@@ -18,9 +18,18 @@ dependencies = [
 [project.optional-dependencies]
 test = [
     "pytest",
+    "hivemind-plugin-manager>=0.7.0a1",
 ]
 dev = [
     "pytest",
+    "hivemind-plugin-manager>=0.7.0a1",
+]
+integration = [
+    "pytest",
+    "hivescope>=0.5.0a2",
+    "hivemind-core>=4.6.2a1",
+    "hivemind-ovos-agent-plugin>=0.3.1a1",
+    "hivemind-plugin-manager>=0.7.0a1",
 ]
 
 [project.urls]
