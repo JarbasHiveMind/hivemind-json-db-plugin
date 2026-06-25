@@ -13,15 +13,9 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
-      - run: pip install -e ".[test]"
-      # Cross-repo policy stack (published prereleases) + hivescope with db= injection
-      - run: >-
-          pip install
-          "hivescope==0.4.0a2"
-          "hivemind-core==4.3.0a2"
-          "hivemind-ovos-agent-plugin==0.2.0a1"
-          "hivemind-plugin-manager==0.6.0a1"
-          "json_database>=0.10.2a1"
+      # Cross-repo policy stack lives in the [integration] extra (versions in
+      # pyproject, not pinned here) so it tracks the latest published prereleases.
+      - run: pip install --pre -e ".[integration]"
       # hivemind-core pulls the published json plugin; restore the editable build
       - run: pip install -e . --no-deps --force-reinstall
       - run: pytest tests/e2e/test_policy_migration_e2e.py -q -p no:cacheprovider
