@@ -10,26 +10,28 @@ license = { text = "Apache-2.0" }
 authors = [{ name = "jarbasAi", email = "jarbasai@mailfence.com" }]
 requires-python = ">=3.9"
 dependencies = [
-    "hivemind-plugin-manager>=0.5.0,<1.0.0",
+    "hivemind-plugin-manager>=0.7.1a1,<1.0.0",
+    "hivemind-bus-client>=0.9.2a1",
+    "ovos-bus-client>=2.0.0a3",
     "json_database>=1.0.0a1,<2.0.0",
-    "ovos-utils",
+    "ovos-utils>=0.11.2a1",
 ]
 
 [project.optional-dependencies]
 test = [
     "pytest",
-    "hivemind-plugin-manager>=0.7.0a1",
+    "hivemind-plugin-manager>=0.7.1a1",
 ]
 dev = [
     "pytest",
-    "hivemind-plugin-manager>=0.7.0a1",
+    "hivemind-plugin-manager>=0.7.1a1",
 ]
 integration = [
     "pytest",
     "hivescope>=0.5.0a2",
     "hivemind-core>=4.6.2a1",
     "hivemind-ovos-agent-plugin>=0.3.1a1",
-    "hivemind-plugin-manager>=0.7.0a1",
+    "hivemind-plugin-manager>=0.7.1a1",
 ]
 
 [project.urls]
