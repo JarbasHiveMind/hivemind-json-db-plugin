@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.4a2](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a2) (2026-07-04)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a1...0.0.4a2)
+
+**Merged pull requests:**
+
+- Update actions/checkout action to v7 [\#12](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/12) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [0.0.4a1](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a1) (2026-06-25)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.3a2...0.0.4a1)
