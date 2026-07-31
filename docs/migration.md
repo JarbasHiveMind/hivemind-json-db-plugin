@@ -14,17 +14,17 @@
 3. The migration is **idempotent and crash-safe**: re-running it on
    already-migrated records is a no-op.
 
-Migration is **eager** — it happens on the first `JsonDB(...)`
+Migration is **eager**. It happens on the first `JsonDB(...)`
 construction after install, before any read or write. The cost on a
-small DB (≤ few thousand clients) is sub-second; large DBs see one
-linear scan + one whole-file rewrite.
+small DB (≤ few thousand clients) is sub-second. Large DBs see one
+linear scan plus one whole-file rewrite.
 
 ## v1 → v2
 
 For each stored client record:
 
 - **`intent_blacklist`**, **`skill_blacklist`** at the top level are
-  folded into the record's `metadata` dict via `setdefault` — an
+  folded into the record's `metadata` dict via `setdefault`. An
   explicit `metadata` value is never clobbered. The top-level keys
   are then dropped.
 - **`message_blacklist`** is purged outright (both the top-level key
@@ -53,7 +53,7 @@ After migration, the on-disk shape is:
 
 Storing the version out-of-band (in a sibling file) rather than as a
 reserved key inside the JSON store keeps the store's dict shape pure
-`client_id -> record` — no special-case filtering in `__iter__`,
+`client_id -> record`, with no special-case filtering in `__iter__`,
 `__len__`, or `search_by_value`. The cost is one extra small file
 written once per migration. See
 [Architecture → Sentinel-file rationale](architecture.md#sentinel-file-rationale).
@@ -65,7 +65,7 @@ $ cat ~/.local/share/hivemind-core/clients.schema_version
 2
 ```
 
-A missing or unparseable sentinel is treated as version `1` — i.e.
+A missing or unparseable sentinel is treated as version `1`, meaning
 "unmigrated, run the migration".
 
 ## Compatibility with older `hivemind-plugin-manager`
@@ -73,7 +73,7 @@ A missing or unparseable sentinel is treated as version `1` — i.e.
 `_maybe_migrate()` reads
 `getattr(AbstractDB, "SCHEMA_VERSION", 1)`. If you happen to run this
 plugin against an HPM that predates the `SCHEMA_VERSION` constant, the
-plugin treats the target as `1` and skips migration — the data stays
+plugin treats the target as `1` and skips migration. The data stays
 in v1 shape, which the older HPM also understands. Migration only runs
 when both sides ship the new contract.
 
@@ -90,14 +90,14 @@ rm ~/.local/share/hivemind-core/clients.schema_version
 # next process start runs _maybe_migrate() from v1
 ```
 
-Idempotency guarantees this is always safe — if the JSON is already in
+Idempotency guarantees this is always safe. If the JSON is already in
 v2 shape, the migration is a no-op and the sentinel just gets rewritten.
 
 ## Future versions
 
 If a future `SCHEMA_VERSION = 3` (or beyond) ships in HPM, this
 plugin's `migrate(from_version)` will need a `v2 -> v3` branch.
-Migrations always go forward from the stored version — there is no
+Migrations always go forward from the stored version. There is no
 support for downgrades.
 
 Implementation pattern for adding a v3:
@@ -111,7 +111,7 @@ def migrate(self, from_version: int) -> None:
     # ...etc, sequential and idempotent
 ```
 
-Each step takes the disk from version N to N+1; running them in
+Each step takes the disk from version N to N+1, so running them in
 sequence advances from any older version. Idempotency for each step
 is enforced by the "look for legacy shape, do nothing if absent"
 pattern the v1→v2 code already uses.
@@ -131,6 +131,9 @@ $ jq 'to_entries[] | .value | keys[] |
 
 If that `jq` produces output, either:
 
-- The migration did not run (the sentinel is missing or stuck at `1` —
-  see [Troubleshooting → Migration ran on every start](troubleshooting.md#migration-ran-on-every-start)).
+- The migration did not run. The sentinel is missing or stuck at `1`.
+  See [Troubleshooting → Migration ran on every start](troubleshooting.md#migration-ran-on-every-start).
 - Or a hand-edit reintroduced a legacy key. Remove it.
+
+---
+[← API Reference](api-reference.md) · [Home](README.md) · [Operations →](operations.md)

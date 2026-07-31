@@ -24,16 +24,16 @@ deep-copy aliasing, the v1→v2 migration (folds, idempotency,
 end-to-end re-open with the schema_version sentinel.
 
 The tests use `tmp_path` and `monkeypatch` to redirect
-`xdg_data_home()` per test — no XDG pollution, safe to run in
+`xdg_data_home()` per test. This avoids XDG pollution, so tests are safe to run in
 parallel.
 
 ## Coding conventions
 
 - Single source file: `hivemind_json_database/__init__.py`. If
-  something grows large enough to warrant splitting, split — but keep
+  something grows large enough to warrant splitting, split it, but keep
   the public surface (`JsonDB`) importable from the package root.
 - The module is intentionally **thin**. Storage primitives live in
-  `json_database`; the `AbstractDB` contract lives in
+  `json_database`. The `AbstractDB` contract lives in
   `hivemind-plugin-manager`. This package is glue. Resist the urge to
   reimplement storage features here.
 - Comments explain **why**, not what. Code is allowed to be obvious.
@@ -87,26 +87,26 @@ Driven by gh-automations:
 2. Merge the propose-stable PR to cut a stable release. The
    `Release Stable` workflow publishes the non-alpha version.
 
-No manual `setup.py sdist` / `twine upload` — the workflow handles it.
+No manual `setup.py sdist` / `twine upload` is needed. The workflow handles it.
 
 ## CI
 
-- **Build Tests** (`.github/workflows/build-tests.yml`) — `pytest` on
-  Python 3.10–3.14. Pulls in `hivemind-plugin-manager@dev` until the
-  next HPM release; once HPM is on PyPI, drop the
+- **Build Tests** (`.github/workflows/build-tests.yml`): runs `pytest` on
+  Python 3.10-3.14. Pulls in `hivemind-plugin-manager@dev` until the
+  next HPM release. Once HPM is on PyPI, drop the
   `pre_install_pip` override.
-- **Coverage** (`.github/workflows/coverage.yml`) — coverage report on
+- **Coverage** (`.github/workflows/coverage.yml`): coverage report on
   Python 3.11, posts a PR comment.
-- **Lint** (`.github/workflows/lint.yml`) — `ruff` / `flake8`.
-- **License Check** (`.github/workflows/license_check.yml`) — verifies
+- **Lint** (`.github/workflows/lint.yml`): `ruff` / `flake8`.
+- **License Check** (`.github/workflows/license_check.yml`): verifies
   dependency licenses against the allowlist.
-- **pip-audit** (`.github/workflows/pip_audit.yml`) — scans deps for
+- **pip-audit** (`.github/workflows/pip_audit.yml`): scans deps for
   known CVEs.
-- **Repo Health** (`.github/workflows/repo-health.yml`) — periodic
+- **Repo Health** (`.github/workflows/repo-health.yml`): periodic
   hygiene checks.
 
-If a workflow fails on a PR, fix the root cause; don't `--no-verify`
-your way around it.
+If a workflow fails on a PR, fix the root cause. Do not use `--no-verify`
+to bypass it.
 
 ## Issue triage
 
@@ -118,5 +118,8 @@ Bug reports should include:
   `crypto_key` with `<redacted>`).
 - The full traceback.
 
-See [Troubleshooting](troubleshooting.md) for common issues that don't
+See [Troubleshooting](troubleshooting.md) for common issues that do not
 need to be filed.
+
+---
+[← Comparison](comparison.md) · [Home](README.md)

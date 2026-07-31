@@ -2,7 +2,7 @@
 
 Three first-party HiveMind database plugins ship under the
 `hivemind.database` entry-point group. They implement the same
-`AbstractDB` contract; the right pick depends on operational
+`AbstractDB` contract. The right pick depends on operational
 constraints, not feature differences.
 
 | | [`hivemind-json-db-plugin`](https://github.com/JarbasHiveMind/hivemind-json-db-plugin) | [`hivemind-sqlite-database`](https://github.com/JarbasHiveMind/hivemind-sqlite-database) | [`hivemind-redis-database`](https://github.com/JarbasHiveMind/hivemind-redis-database) |
@@ -29,7 +29,7 @@ constraints, not feature differences.
 - Static or slowly-changing fleet (provisioned once, edited rarely).
 - You want to `cat`, `grep`, `git diff` the database.
 - Dev / staging / CI environments.
-- Minimal containers — no need for the `sqlite3` C lib or a Redis
+- Minimal containers that need no `sqlite3` C lib or Redis
   daemon.
 
 This is the **default for `hivemind-core`** and the right starting
@@ -40,8 +40,8 @@ point unless you already know you have constraints that rule it out.
 - Single host, but write-heavy or large.
 - Indexed lookups on `name` / `api_key` matter (e.g. auth path on
   every connection).
-- You need encryption at rest with a real key-management story —
-  install the `[cipher]` extra and use `sqlcipher`.
+- You need encryption at rest with a real key-management story. Install
+  the `[cipher]` extra and use `sqlcipher`.
 - You want WAL-mode multi-reader concurrency (read-only consumers can
   share with a live writer).
 
@@ -81,15 +81,18 @@ contents are already JSON. See
 
 ## What's identical across backends
 
-- `Client` dataclass shape — same fields, same property shims, same
+- `Client` dataclass shape: same fields, same property shims, same
   `metadata` semantics.
 - The v1→v2 schema migration applies to all three (each implements
   `AbstractDB.migrate()` for its own storage shape; user-visible
   outcome is the same).
 - CLI behaviour from `hivemind-core` (`add-client`, `list-clients`,
   `delete-client`, etc.) is backend-independent.
-- Policy chain consumption — admission control and the
+- Policy chain consumption: admission control and the
   `OVOSAgentPolicy` skill/intent blacklists work identically.
 
 If you change backends, no application-level code should need to
 change. The differences are all operational.
+
+---
+[← Troubleshooting](troubleshooting.md) · [Home](README.md) · [Contributing →](contributing.md)

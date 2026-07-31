@@ -28,13 +28,13 @@ cp ~/.local/share/hivemind-core/clients.json \
 restic backup ~/.local/share/hivemind-core/
 ```
 
-**Always include both files** — `clients.json` and
+**Always include both files**: `clients.json` and
 `clients.schema_version`. Restoring just the JSON file with a stale
 sentinel triggers a migration on the next open, which is harmless but
 noisy in logs. Restoring just the sentinel with the wrong JSON gives
 you incoherent state.
 
-For the encrypted variant, the same applies — the binary file backs up
+For the encrypted variant, the same applies. The binary file backs up
 like any other.
 
 ### Live-process backups
@@ -78,7 +78,7 @@ The unencrypted file is JSON. You can edit it directly with any editor
 or `jq`:
 
 ```bash
-# Stop the process — JsonDB is single-writer
+# Stop the process: JsonDB is single-writer
 systemctl --user stop hivemind-core
 
 # Edit
@@ -93,7 +93,7 @@ systemctl --user start hivemind-core
 
 The plugin reads the file on open and reconstructs `Client` instances
 via `cast2client(...)`. Any field the dataclass knows about
-round-trips; unknown fields are silently dropped on the next write
+round-trips. Unknown fields are silently dropped on the next write
 (the plugin re-serialises from `client.__dict__`, not from the original
 JSON).
 
@@ -104,7 +104,7 @@ JSON).
   `api_key` (str).
 - The key must be the stringified `client_id`. A mismatch
   (key `"3"`, value `client_id: 7`) is read with the value's
-  `client_id` winning — the key is just a dict slot.
+  `client_id` winning. The key is just a dict slot.
 
 If you violate these, the next `commit()` may either ignore your edit
 silently or refuse to load the file at startup. Keep a backup before
@@ -129,7 +129,7 @@ jq 'to_entries[] | select(.value.is_admin == true) | .value.name' clients.json
 
 If the JSON file is truncated or invalid:
 
-1. **First, try the backup** — that's what backups are for.
+1. **First, try the backup.** That is what backups are for.
 2. **If no backup**, try to repair the trailing braces. JSON
    corruption usually looks like a half-written final record.
    ```bash
@@ -137,13 +137,13 @@ If the JSON file is truncated or invalid:
    ```
    Open in an editor, close the dangling structure, save.
 3. **If a record is unsalvageable**, delete it. A missing client is
-   recoverable (issue a new `api_key`); a corrupted DB is not.
+   recoverable (issue a new `api_key`). A corrupted DB is not.
 
-`json_database`'s `JsonStorage` is intentionally strict — it does
+`json_database`'s `JsonStorage` is intentionally strict. It does
 **not** try to recover partial files automatically. If `commit()` ever
 encounters a write error, the existing file stays untouched (atomic
 rename only happens on success). Corruption from this layer's writes
-is therefore very rare; the usual cause is filesystem-level events
+is therefore very rare. The usual cause is filesystem-level events
 (power loss without WAL, disk full).
 
 ## Auditing schema migrations
@@ -218,3 +218,6 @@ Then flip the `database.module` in `server.json` from
 `hivemind-json-db-plugin` to `hivemind-sqlite-db-plugin`, restart, and
 keep the JSON file as a backup until you're confident the new backend
 holds.
+
+---
+[← Migration](migration.md) · [Home](README.md) · [Troubleshooting →](troubleshooting.md)

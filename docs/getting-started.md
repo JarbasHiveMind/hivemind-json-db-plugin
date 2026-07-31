@@ -8,11 +8,11 @@ pip install hivemind-json-db-plugin
 
 Pulls in:
 
-- `hivemind-plugin-manager >= 0.5.0` — the `AbstractDB` contract and
+- `hivemind-plugin-manager >= 0.5.0`: the `AbstractDB` contract and
   `DatabaseFactory` discovery.
-- `json_database` — the underlying `JsonStorageXDG` /
+- `json_database`: the underlying `JsonStorageXDG` /
   `EncryptedJsonStorageXDG` storage primitives.
-- `ovos-utils` — XDG path resolution.
+- `ovos-utils`: XDG path resolution.
 
 To use the optional AES-GCM encrypted store, also install
 `pycryptodomex`:
@@ -21,7 +21,7 @@ To use the optional AES-GCM encrypted store, also install
 pip install pycryptodomex
 ```
 
-The plugin auto-discovers `pycryptodomex` through `json_database`; you do
+The plugin auto-discovers `pycryptodomex` through `json_database`. You do
 not need to import it explicitly.
 
 ## Activate via hivemind-core config
@@ -81,7 +81,7 @@ db.commit()
 ```
 
 `db.commit()` is what flushes the in-memory dict to disk. `add_item` /
-`delete_item` mutate memory and return immediately; you can batch many
+`delete_item` mutate memory and return immediately, so you can batch many
 writes between commits.
 
 ## What's on disk
@@ -94,7 +94,7 @@ After the above, you'll have:
 └── clients.schema_version # one-line file: "2"
 ```
 
-The `.json` file is human-readable — open it, grep it, version-control
+The `.json` file is human-readable. Open it, grep it, version-control
 it. The `.schema_version` sentinel is written once at first open and
 controls whether `migrate()` runs on subsequent opens.
 
@@ -118,6 +118,9 @@ or its entry point didn't register. Re-install with `pip install
 
 ## Next
 
-- [Configuration](configuration.md) — encryption, paths, multi-instance
-- [Architecture](architecture.md) — on-disk shape, semantics, design notes
-- [Operations](operations.md) — backups, recovery, hand-editing
+- [Configuration](configuration.md): encryption, paths, multi-instance
+- [Architecture](architecture.md): on-disk shape, semantics, design notes
+- [Operations](operations.md): backups, recovery, hand-editing
+
+---
+[Home](README.md) · [Configuration →](configuration.md)

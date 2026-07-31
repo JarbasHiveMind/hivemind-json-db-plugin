@@ -40,7 +40,7 @@ $XDG_DATA_HOME/hivemind-core/clients.json
 ~/.local/share/hivemind-core/clients.json     # most Linux setups
 ```
 
-The directory is created on first write — no upfront `mkdir` needed.
+The directory is created on first write. No upfront `mkdir` is needed.
 
 ### Relocating the database
 
@@ -54,15 +54,15 @@ XDG_DATA_HOME=/srv/hivemind hivemind-core listen
 ```
 
 For arbitrary absolute paths (outside `$XDG_DATA_HOME`), there is no
-config knob — use a symlink in `$XDG_DATA_HOME/hivemind-core/` pointing
-to the real file. The plugin reads and writes through that symlink
+config knob. Use a symlink in `$XDG_DATA_HOME/hivemind-core/` pointing
+to the real file instead. The plugin reads and writes through that symlink
 transparently.
 
 ### Multiple HiveMind instances on the same host
 
 If you run two `hivemind-core` instances on one box, give them distinct
 `name` or `subfolder` values so they don't share a file. The plugin
-does not coordinate access between processes — see
+does not coordinate access between processes. See
 [Concurrency](#concurrency-and-multi-instance).
 
 ## Encryption
@@ -86,16 +86,16 @@ Passing a non-empty `password` switches the backend from
 **Properties:**
 
 - AES-GCM over a zlib-compressed JSON blob.
-- The file on disk is **not** valid JSON — it's a binary container.
+- The file on disk is **not** valid JSON. It is a binary container.
   You cannot `cat` / `jq` it.
-- The same `name` / `subfolder` resolution applies; the file just isn't
+- The same `name` / `subfolder` resolution applies. The file just is not
   human-readable.
 
 **Cryptographic caveats (inherited from `json_database`):**
 
 - **Key length:** the underlying primitive truncates keys longer than 16
   bytes silently. Use **exactly 16 bytes**. Pad or hash to that length
-  yourself; do not pass a 32-byte key expecting AES-256.
+  yourself. Do not pass a 32-byte key expecting AES-256.
 - **No key rotation:** there is no built-in re-key flow. To change the
   password you must read the DB with the old key, write a new DB with
   the new key.
@@ -113,7 +113,7 @@ SQLite with `sqlcipher`).
 `JsonDB` is **single-writer**. The underlying `JsonStorage` uses
 `combo_lock` for in-process write safety, but two separate
 `hivemind-core` processes pointed at the same `clients.json` file will
-race on writes — the last commit wins, and an interrupted write can
+race on writes. The last commit wins, and an interrupted write can
 truncate the file mid-update.
 
 If you need concurrent multi-process access, use
@@ -127,7 +127,7 @@ or [`hivemind-sqlite-database`](https://github.com/JarbasHiveMind/hivemind-sqlit
   on `commit()` stay under tens of milliseconds.
 - **10k+ clients or write-heavy:** the whole-file rewrite cost shows.
   Move to SQLite.
-- **Sharded across hosts:** out of scope; use Redis.
+- **Sharded across hosts:** out of scope. Use Redis instead.
 
 ## Schema version
 
@@ -136,3 +136,6 @@ The plugin tracks its on-disk schema version in a sibling file
 automatically on first open after install. See [Migration](migration.md)
 for what version transitions do and how to recover from a stale
 sentinel.
+
+---
+[← Getting Started](getting-started.md) · [Home](README.md) · [Architecture →](architecture.md)
