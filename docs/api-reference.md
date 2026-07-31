@@ -32,9 +32,9 @@ See [Configuration](configuration.md) for full semantics.
 Insert or overwrite a record keyed by `client.client_id`. Always
 returns `True`.
 
-`client.__dict__` is deep-copied before storage to break aliasing —
-post-`add_item` mutations on the caller's `Client` do not leak into the
-stored record. See [Architecture → Aliasing semantics](architecture.md#aliasing-semantics).
+`client.__dict__` is deep-copied before storage to break aliasing. Post-`add_item`
+mutations on the caller's `Client` do not leak into the stored record. See
+[Architecture → Aliasing semantics](architecture.md#aliasing-semantics).
 
 Memory-only. Call `commit()` to persist.
 
@@ -42,42 +42,42 @@ Memory-only. Call `commit()` to persist.
 
 Inherited from `AbstractDB`. Replaces the record at `client.client_id`
 with a tombstone (`Client(client_id=X, api_key="revoked")`) and calls
-`update_item`. The slot stays allocated — `client_id`s are never
+`update_item`. The slot stays allocated. `client_id`s are never
 reused. Returns whatever `update_item` returned.
 
 ### `update_item(client: Client) -> bool`
 
-Inherited from `AbstractDB`; calls `add_item`.
+Inherited from `AbstractDB`. Calls `add_item`.
 
 ### `replace_item(old_client: Client, new_client: Client) -> bool`
 
-Inherited from `AbstractDB`; calls `delete_item(old)` then
+Inherited from `AbstractDB`. Calls `delete_item(old)` then
 `add_item(new)`. Note that this leaves a revoked tombstone at
-`old.client_id` and a fresh record at `new.client_id`. If you want to
-edit a record in place, just call `add_item` with the updated `Client`
-— it overwrites by `client_id`.
+`old.client_id` and a fresh record at `new.client_id`. To edit a record
+in place, call `add_item` with the updated `Client` instead. It
+overwrites by `client_id`.
 
 ### `search_by_value(key: str, val) -> List[Client]`
 
 Return every stored client whose attribute named `key` equals `val`.
 
-- `key="client_id"` uses `dict.get(val)` — **O(1)**.
-- Every other key falls back to a linear scan — **O(n)**.
+- `key="client_id"` uses `dict.get(val)`, which is **O(1)**.
+- Every other key falls back to a linear scan, which is **O(n)**.
 
 The matching is exact equality (`==`). No substring, no regex, no
 case-folding.
 
 ### `__iter__() -> Iterable[Client]`
 
-Yield every stored record as a `Client`. Order matches insertion order
-(Python dicts preserve insertion order; the JSON store does too).
-Includes tombstoned records (`api_key="revoked"`) — filter at the call
+Yield every stored record as a `Client`. Order matches insertion order.
+(Python dicts preserve insertion order, and so does the JSON store.)
+Includes tombstoned records (`api_key="revoked"`). Filter at the call
 site if you need only live ones.
 
 ### `__len__() -> int`
 
 Return the number of stored records, including tombstones. The
-`<name>.schema_version` sentinel does **not** count — it's a sibling
+`<name>.schema_version` sentinel does **not** count. It is a sibling
 file, not a record.
 
 ### `sync() -> None`
@@ -86,7 +86,7 @@ Re-read the file from disk into memory. Use this if you suspect the
 file was modified out-of-band (e.g. by another process or a manual
 edit) and want to pick up the changes without restarting.
 
-`sync()` does not write — any uncommitted in-memory changes since the
+`sync()` does not write. Any uncommitted in-memory changes since the
 last `commit()` are **discarded**. Commit first if you have pending
 writes.
 
@@ -106,10 +106,10 @@ Schema migration hook from `AbstractDB`. Called automatically by
 behind `AbstractDB.SCHEMA_VERSION`.
 
 `v1 -> v2`: fold legacy top-level `intent_blacklist` / `skill_blacklist`
-into each record's `metadata` dict (`setdefault`); purge
+into each record's `metadata` dict (`setdefault`). Purge
 `message_blacklist` outright (top-level **and** any residual
-`metadata["message_blacklist"]` from a prior migration run); commit
-once at the end. Idempotent — re-runs are no-ops.
+`metadata["message_blacklist"]` from a prior migration run). Commit
+once at the end. Idempotent, so re-runs are no-ops.
 
 You should not normally need to call this directly. See
 [Migration](migration.md) for the full contract.
@@ -118,12 +118,12 @@ You should not normally need to call this directly. See
 
 The following are implementation details, not part of the stable API:
 
-- `_db` — the underlying `JsonStorage(XDG)` instance.
-- `_schema_version_path()` — full path to the sentinel sibling file.
-- `_read_schema_version() -> int` — reads the sentinel, returns 1 on
+- `_db`: the underlying `JsonStorage(XDG)` instance.
+- `_schema_version_path()`: full path to the sentinel sibling file.
+- `_read_schema_version() -> int`: reads the sentinel, returns 1 on
   missing / unparseable.
-- `_write_schema_version(version: int)` — writes the sentinel.
-- `_maybe_migrate()` — invokes `migrate()` if needed and bumps the
+- `_write_schema_version(version: int)`: writes the sentinel.
+- `_maybe_migrate()`: invokes `migrate()` if needed and bumps the
   sentinel.
 
 These can change between releases.
@@ -132,8 +132,8 @@ These can change between releases.
 
 Standard `__version__` string sourced from
 `hivemind_json_database/version.py`. Bumped automatically by the
-gh-automations release workflow from conventional-commit prefixes; do
-not edit by hand.
+gh-automations release workflow from conventional-commit prefixes. Do
+not edit it by hand.
 
 ## Entry point
 
@@ -151,3 +151,6 @@ db = DatabaseFactory.create("hivemind-json-db-plugin",
                             name="clients",
                             subfolder="hivemind-core")
 ```
+
+---
+[← Architecture](architecture.md) · [Home](README.md) · [Migration →](migration.md)

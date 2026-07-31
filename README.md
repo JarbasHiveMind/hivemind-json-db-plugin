@@ -21,7 +21,7 @@ hivemind-core
 
 The plugin registers under the `hivemind.database` entry-point group as
 `hivemind-json-db-plugin`. `hivemind-core` loads it automatically when `server.json`
-sets `database.module` to this name; you never instantiate `JsonDB` directly in normal
+sets `database.module` to this name. You never instantiate `JsonDB` directly in normal
 usage.
 
 ## Install
@@ -75,7 +75,7 @@ Enable AES encryption via `json_database`'s `EncryptedJsonStorageXDG`:
 > **Warning**: There is no password recovery. If you lose the passphrase the database
 > is permanently unrecoverable. Back up the passphrase securely.
 
-An encrypted database cannot be opened without the passphrase; a plain database cannot
+An encrypted database cannot be opened without the passphrase. A plain database cannot
 be opened as encrypted. There is no automatic migration between the two modes.
 
 ## Configuration reference
@@ -104,7 +104,12 @@ hivemind-core migrate-db
 
 ## Docs
 
-- [docs/architecture.md](docs/architecture.md) — internals, sentinel-file rationale, encrypted-store sentinel
-- [docs/migration.md](docs/migration.md) — schema migration details, v1→v2, forcing a re-migration
-- [docs/configuration.md](docs/configuration.md) — full configuration reference
-- [docs/operations.md](docs/operations.md) — file locations, backup, restore, authoring a plugin
+- [docs/architecture.md](docs/architecture.md): internals, sentinel-file rationale, encrypted-store sentinel
+- [docs/migration.md](docs/migration.md): schema migration details, v1→v2, forcing a re-migration
+- [docs/configuration.md](docs/configuration.md): full configuration reference
+- [docs/operations.md](docs/operations.md): file locations, backup, restore, authoring a plugin
+- [docs/getting-started.md](docs/getting-started.md): install, activation, standalone use
+- [docs/api-reference.md](docs/api-reference.md): `JsonDB` method reference
+- [docs/troubleshooting.md](docs/troubleshooting.md): common failure modes
+- [docs/comparison.md](docs/comparison.md): choosing between JsonDB, SQLite, and Redis backends
+- [docs/contributing.md](docs/contributing.md): dev setup, conventions, release process

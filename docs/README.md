@@ -1,13 +1,13 @@
 # hivemind-json-db-plugin — Documentation
 
 JSON-file database backend for [`hivemind-core`](https://github.com/JarbasHiveMind/HiveMind-core).
-Implements the [`hivemind-plugin-manager`](https://github.com/JarbasHiveMind/hivemind-plugin-manager)
+It implements the [`hivemind-plugin-manager`](https://github.com/JarbasHiveMind/hivemind-plugin-manager)
 `AbstractDB` contract on top of
 [`json_database`](https://github.com/TigreGotico/json_database)'s `JsonStorageXDG`.
 
-This is the simplest of the three first-party HiveMind database backends —
-single-file, plain JSON on disk, no daemon, optional AES-GCM encryption.
-Recommended for small single-node deployments, dev environments, and CI.
+This is the simplest of the three first-party HiveMind database backends. It stores
+data as a single plain JSON file on disk, needs no daemon, and supports optional
+AES-GCM encryption. It suits small single-node deployments, dev environments, and CI.
 
 ---
 
@@ -33,18 +33,18 @@ Recommended for small single-node deployments, dev environments, and CI.
 - You have a single HiveMind node and a few dozen to a few thousand clients.
 - You want the database to be a text file you can `cat`, `grep`, edit, and
   commit to git.
-- Your client list changes infrequently — every write rewrites the whole file.
+- Your client list changes infrequently. Every write rewrites the whole file.
 - You want zero external dependencies (no SQLite library, no Redis server).
 
 **Pick something else when:**
-- You have tens of thousands of clients or write churn — use
+- You have tens of thousands of clients or heavy write churn. Use
   [`hivemind-sqlite-database`](https://github.com/JarbasHiveMind/hivemind-sqlite-database)
   for an indexed, in-place-updated store.
-- You need to share a client DB between multiple HiveMind processes or nodes —
-  use [`hivemind-redis-database`](https://github.com/JarbasHiveMind/hivemind-redis-database).
-- You need encryption with key rotation, audit logs, or HSM-backed keys — the
-  optional `password=...` here is AES-GCM symmetric, which suits *at-rest*
-  protection but not key-management workflows.
+- You need to share a client DB between multiple HiveMind processes or nodes.
+  Use [`hivemind-redis-database`](https://github.com/JarbasHiveMind/hivemind-redis-database).
+- You need encryption with key rotation, audit logs, or HSM-backed keys. The
+  optional `password=...` here is AES-GCM symmetric. It protects data at rest
+  but does not cover key-management workflows.
 
 See [Comparison](comparison.md) for the full matrix.
 
