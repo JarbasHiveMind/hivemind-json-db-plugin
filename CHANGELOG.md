@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.4a3](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a3) (2026-07-31)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a2...0.0.4a3)
+
+**Merged pull requests:**
+
+- docs: rewrite README in Simplified Technical English [\#17](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/17) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.0.4a2](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a2) (2026-07-04)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a1...0.0.4a2)
