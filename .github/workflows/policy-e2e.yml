@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
         with:
-          python-version: "3.11"
+          python-version: "3.14"
       # Cross-repo policy stack lives in the [integration] extra (versions in
       # pyproject, not pinned here) so it tracks the latest published prereleases.
       - run: pip install --pre -e ".[integration]"
