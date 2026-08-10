@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.0.4a4](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a4) (2026-08-10)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a3...0.0.4a4)
+
+**Merged pull requests:**
+
+- chore\(ci\): drop the broken, redundant Dependabot config [\#19](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/19) ([JarbasAl](https://github.com/JarbasAl))
+- Update actions/setup-python action to v7 [\#16](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/16) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency python to 3.14 [\#9](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/9) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [0.0.4a3](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a3) (2026-07-31)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a2...0.0.4a3)
