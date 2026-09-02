@@ -1,20 +1,28 @@
 # Changelog
 
+## [0.0.5a1](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.5a1) (2026-09-02)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a7...0.0.5a1)
+
+**Merged pull requests:**
+
+- fix: key JSON client records by str\(client\_id\) so id lookups survive reload [\#25](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/25) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.0.4a7](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a7) (2026-08-15)
 
-[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a6...0.0.4a7)
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a5...0.0.4a7)
 
 **Merged pull requests:**
 
 - docs: add AGENTS.md with per-repo agent conventions [\#23](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/23) ([JarbasAl](https://github.com/JarbasAl))
 
-## [0.0.4a6](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a6) (2026-08-10)
-
-[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a5...0.0.4a6)
-
 ## [0.0.4a5](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a5) (2026-08-10)
 
-[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a4...0.0.4a5)
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a6...0.0.4a5)
+
+## [0.0.4a6](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a6) (2026-08-10)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a4...0.0.4a6)
 
 ## [0.0.4a4](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a4) (2026-08-10)
 
