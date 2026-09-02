@@ -105,7 +105,7 @@ class JsonDB(AbstractDB):
                             val, (list, tuple)) else val
             if changed:
                 record["metadata"] = metadata
-                self._db[client_id] = record
+                self._db[str(client_id)] = record
                 changed_any = True
         if changed_any:
             try:
@@ -132,7 +132,7 @@ class JsonDB(AbstractDB):
         # would otherwise reference caller state and pick up later mutations
         # on the next commit. Snapshot once on insert.
         client_data = copy.deepcopy(client.__dict__)
-        self._db[client.client_id] = client_data
+        self._db[str(client.client_id)] = client_data
         return True
 
     def search_by_value(self, key: str, val: Union[str, bool, int, float]) -> List[Client]:
@@ -148,7 +148,7 @@ class JsonDB(AbstractDB):
         """
         res = []
         if key == "client_id":
-            v = self._db.get(val)
+            v = self._db.get(str(val))
             if v:
                 res.append(cast2client(v))
         else:
