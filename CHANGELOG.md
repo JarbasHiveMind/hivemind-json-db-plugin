@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.5a2](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.5a2) (2026-09-02)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.5a1...0.0.5a2)
+
+**Merged pull requests:**
+
+- test: fix e2e cache-invalidation helper to call invalidate\_user [\#27](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/27) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.0.5a1](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.5a1) (2026-09-02)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a7...0.0.5a1)
@@ -10,19 +18,19 @@
 
 ## [0.0.4a7](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a7) (2026-08-15)
 
-[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a5...0.0.4a7)
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a6...0.0.4a7)
 
 **Merged pull requests:**
 
 - docs: add AGENTS.md with per-repo agent conventions [\#23](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/23) ([JarbasAl](https://github.com/JarbasAl))
 
-## [0.0.4a5](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a5) (2026-08-10)
-
-[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a6...0.0.4a5)
-
 ## [0.0.4a6](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a6) (2026-08-10)
 
-[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a4...0.0.4a6)
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a5...0.0.4a6)
+
+## [0.0.4a5](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a5) (2026-08-10)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a4...0.0.4a5)
 
 ## [0.0.4a4](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a4) (2026-08-10)
 
