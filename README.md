@@ -96,11 +96,15 @@ The migration is idempotent and crash-safe. See [docs/migration.md](docs/migrati
 for full details.
 
 To migrate an existing installation to this backend, use hivemind-core's built-in
-command:
+command with explicit `--from` and `--to` flags:
 
 ```bash
-hivemind-core migrate-db
+hivemind-core migrate-db --from <current-backend-module> --to hivemind-json-db-plugin
 ```
+
+Running `hivemind-core migrate-db` with no flags does not migrate to this backend:
+the command defaults `--from` to `hivemind-json-db-plugin` and `--to` to
+`hivemind-sqlite-db-plugin`, which migrates away from it instead.
 
 ## Docs
 
