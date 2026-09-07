@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.5a3](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.5a3) (2026-09-07)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.5a2...0.0.5a3)
+
+**Merged pull requests:**
+
+- test: accept-and-drop removed crypto\_key in e2e adapter [\#30](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/30) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.0.5a2](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.5a2) (2026-09-02)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.5a1...0.0.5a2)
