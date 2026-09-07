@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.5a4](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.5a4) (2026-09-07)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.5a3...0.0.5a4)
+
+**Merged pull requests:**
+
+- docs: fix migrate-db example that migrates away from this backend [\#29](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/29) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.0.5a3](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.5a3) (2026-09-07)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.5a2...0.0.5a3)
