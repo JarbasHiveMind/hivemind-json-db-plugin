@@ -74,13 +74,11 @@ class JsonDB(AbstractDB):
         v1 -> v2: fold each record's top-level ``intent_blacklist`` /
         ``skill_blacklist`` values into the record's ``metadata`` dict
         (``setdefault`` — explicit metadata values are never clobbered),
-        then remove the legacy top-level keys. ``message_blacklist`` is
-        **purged without carry-forward** — the field was a 2024-12-20
-        design mistake that contradicted the deny-by-default whitelist
-        model and was removed from the Client data model in HPM. Any
-        residual ``metadata["message_blacklist"]`` from a prior
-        migration run is also stripped. The store is committed once at
-        the end.
+        then remove the legacy top-level keys. ``message_blacklist``
+        is purged outright (the field is not part of the ``Client``
+        data model); any residual ``metadata["message_blacklist"]``
+        from a prior migration run is also stripped. The store is
+        committed once at the end.
         """
         if from_version >= 2:
             return
@@ -107,7 +105,7 @@ class JsonDB(AbstractDB):
                             val, (list, tuple)) else val
             if changed:
                 record["metadata"] = metadata
-                self._db[client_id] = record
+                self._db[str(client_id)] = record
                 changed_any = True
         if changed_any:
             try:
@@ -134,7 +132,7 @@ class JsonDB(AbstractDB):
         # would otherwise reference caller state and pick up later mutations
         # on the next commit. Snapshot once on insert.
         client_data = copy.deepcopy(client.__dict__)
-        self._db[client.client_id] = client_data
+        self._db[str(client.client_id)] = client_data
         return True
 
     def search_by_value(self, key: str, val: Union[str, bool, int, float]) -> List[Client]:
@@ -150,7 +148,7 @@ class JsonDB(AbstractDB):
         """
         res = []
         if key == "client_id":
-            v = self._db.get(val)
+            v = self._db.get(str(val))
             if v:
                 res.append(cast2client(v))
         else:
