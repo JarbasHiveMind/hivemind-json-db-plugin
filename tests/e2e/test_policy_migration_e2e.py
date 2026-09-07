@@ -71,13 +71,13 @@ class _HivescopeDBAdapter:
         object.__setattr__(self, "_cdb", cdb)
 
     def add_client(self, name, key, password=None, admin=False,
-                   crypto_key=None, allowed_types=None, metadata=None,
+                   allowed_types=None, metadata=None,
                    intent_blacklist=None, skill_blacklist=None,
                    message_blacklist=None, can_escalate=True,
                    can_propagate=True, can_broadcast=True):
         result = self._cdb.add_client(
             name=name, key=key, admin=admin, allowed_types=allowed_types,
-            crypto_key=crypto_key, password=password, metadata=metadata,
+            password=password, metadata=metadata,
             intent_blacklist=intent_blacklist, skill_blacklist=skill_blacklist,
             message_blacklist=message_blacklist,
         )
