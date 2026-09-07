@@ -75,9 +75,12 @@ class _HivescopeDBAdapter:
                    intent_blacklist=None, skill_blacklist=None,
                    message_blacklist=None, can_escalate=True,
                    can_propagate=True, can_broadcast=True):
+        # crypto_key is accepted-and-dropped: released hivescope still passes it
+        # via register_satellite, but the real ClientDatabase no longer takes it
+        # (v3-Noise-only flag-day). See HiveMind-core#315.
         result = self._cdb.add_client(
             name=name, key=key, admin=admin, allowed_types=allowed_types,
-            crypto_key=crypto_key, password=password, metadata=metadata,
+            password=password, metadata=metadata,
             intent_blacklist=intent_blacklist, skill_blacklist=skill_blacklist,
             message_blacklist=message_blacklist,
         )
