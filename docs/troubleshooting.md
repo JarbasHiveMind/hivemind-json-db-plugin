@@ -35,7 +35,7 @@ the entry-point manifest.
 ## `ImportError: cannot import name 'JsonDB'`
 
 You probably have the old `json_database.hpm:JsonDB` import in your
-code. The plugin has been extracted into its own package — update:
+code. The plugin has been extracted into its own package. Update it:
 
 ```python
 # Before
@@ -47,7 +47,7 @@ from hivemind_json_database import JsonDB
 
 The `hivemind.database` entry-point name is unchanged
 (`hivemind-json-db-plugin`), so config files in `server.json` don't
-need an update — only direct Python imports do.
+need an update. Only direct Python imports do.
 
 ## `ImportError: pycryptodomex` (when using `password=...`)
 
@@ -64,7 +64,7 @@ deployments don't use the encrypted form.
 
 `json_database`'s `EncryptedJsonStorage` accepts longer keys but
 **silently truncates** to 16 bytes. If you set a 32-byte password
-expecting AES-256, you're actually using the first 16 bytes — AES-128.
+expecting AES-256, you are actually using the first 16 bytes, which is AES-128.
 
 Use exactly 16 bytes:
 
@@ -88,10 +88,10 @@ The JSON file is corrupt. Causes:
 
 - An out-of-band edit broke the syntax.
 - A power loss between `os.write` and `os.replace` truncated the temp
-  file (rare — atomic rename should prevent the actual file being
-  affected, but a sufficiently old fs can fail).
-- Disk full during a commit (the temp file is incomplete, but the real
-  file should still be intact — check it first).
+  file. This is rare: atomic rename should prevent the actual file
+  from being affected, but a sufficiently old filesystem can fail.
+- Disk full during a commit. The temp file is incomplete, but the real
+  file should still be intact. Check it first.
 
 Fix per [Operations → Recovery from corruption](operations.md#recovery-from-corruption).
 
@@ -106,12 +106,12 @@ causes:
 - A different user owns the file and the current process can't write
   the sentinel. Fix permissions.
 
-The migration itself is idempotent — re-running it is harmless, but
+The migration itself is idempotent, so re-running it is harmless. But
 the log noise indicates a real config problem.
 
 ## "Client metadata I set isn't there after restart"
 
-You called `add_item` but not `commit`. `add_item` is memory-only;
+You called `add_item` but not `commit`. `add_item` is memory-only.
 `commit()` is what writes to disk. If your process exits before
 commit, the change is lost.
 
@@ -121,13 +121,13 @@ directly from Python (e.g. in a script), add the `commit()`.
 
 ## "Stored metadata mutated after I committed"
 
-You hit an aliasing bug — but `JsonDB` defends against this by
-deep-copying on insert. If you're seeing the symptom anyway, check:
+You hit an aliasing bug, but `JsonDB` defends against this by
+deep-copying on insert. If you are seeing the symptom anyway, check:
 
 - Are you holding a reference to the dict returned from
-  `db._db[client_id]` and mutating it? That's an internal view, and
-  the plugin doesn't track mutations on the returned reference. Don't
-  do that — call `add_item` with a new `Client` to update.
+  `db._db[client_id]` and mutating it? That is an internal view, and
+  the plugin does not track mutations on the returned reference. Do
+  not do that. Call `add_item` with a new `Client` to update instead.
 - Are you running an old `hivemind-json-db-plugin` predating the
   deep-copy fix? `pip show` and upgrade if so.
 
@@ -148,8 +148,8 @@ Either:
 
 ## "After upgrading HPM, every read crashes with `TypeError: unexpected keyword argument 'message_blacklist'`"
 
-This was a hazard in an earlier HPM rebuild that has since been fixed
-— make sure you're on HPM ≥ the policy-plugins release (see HPM
+This was a hazard in an earlier HPM rebuild that has since been fixed.
+Make sure you are on HPM ≥ the policy-plugins release (see HPM
 PR #27). The current contract is: `Client(message_blacklist=...)` is
 accepted and discarded with a `DeprecationWarning`, not a `TypeError`.
 
@@ -168,6 +168,9 @@ Useful info for a bug report:
 - Output of `pip show hivemind-json-db-plugin hivemind-plugin-manager json_database`.
 - The `<name>.schema_version` content (`cat`).
 - A **redacted** snippet of `clients.json` showing the affected record(s).
-  Replace `api_key` and `crypto_key` with `<redacted>` — these are
+  Replace `api_key` and `crypto_key` with `<redacted>`. These are
   credentials.
 - The full traceback if any.
+
+---
+[← Operations](operations.md) · [Home](README.md) · [Comparison →](comparison.md)

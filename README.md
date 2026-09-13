@@ -1,9 +1,28 @@
 # hivemind-json-db-plugin
 
-JSON-file database plugin for [hivemind-core](https://github.com/JarbasHiveMind/HiveMind-core).
+JSON-file database backend for [hivemind-core](https://github.com/JarbasHiveMind/HiveMind-core).
+
 Implements the [`hivemind-plugin-manager`](https://github.com/JarbasHiveMind/hivemind-plugin-manager)
 `AbstractDB` contract on top of [`json_database`](https://github.com/TigreGotico/json_database)'s
-`JsonStorageXDG`.
+`JsonStorageXDG`. Client records (API keys, crypto keys, access-control lists) are stored as a
+single JSON file on disk.
+
+This backend is well-suited for development, small deployments, and single-host hubs where
+simplicity and zero infrastructure dependencies matter more than query speed.
+
+## Where it fits
+
+```
+hivemind-core
+  └── hivemind-plugin-manager  (DatabaseFactory loads plugins by entry-point)
+        └── hivemind-json-db-plugin  ← this repo
+              └── json_database (JsonStorageXDG / EncryptedJsonStorageXDG)
+```
+
+The plugin registers under the `hivemind.database` entry-point group as
+`hivemind-json-db-plugin`. `hivemind-core` loads it automatically when `server.json`
+sets `database.module` to this name. You never instantiate `JsonDB` directly in normal
+usage.
 
 ## Install
 
@@ -11,12 +30,9 @@ Implements the [`hivemind-plugin-manager`](https://github.com/JarbasHiveMind/hiv
 pip install hivemind-json-db-plugin
 ```
 
-Optional file encryption (AES via `pycryptodomex`) is available through `json_database`'s
-own `EncryptedJsonStorageXDG`; pass `password=...` when instantiating the backend.
+## Quickstart
 
-## Usage
-
-Activate via `hivemind-core`'s database config:
+Add or update the `"database"` block in `~/.config/hivemind-core/server.json`:
 
 ```json
 {
@@ -30,28 +46,74 @@ Activate via `hivemind-core`'s database config:
 }
 ```
 
-The plugin is registered under the `hivemind.database` entry-point group as
-`hivemind-json-db-plugin`, so any `hivemind-plugin-manager`-aware consumer can
-discover it via `DatabaseFactory`.
+Then start (or restart) hivemind-core:
+
+```bash
+hivemind-core listen
+```
+
+The database file is created automatically at
+`$XDG_DATA_HOME/hivemind-core/clients.json` (typically `~/.local/share/hivemind-core/clients.json`).
+
+### Optional encryption
+
+Enable AES encryption via `json_database`'s `EncryptedJsonStorageXDG`:
+
+```json
+{
+  "database": {
+    "module": "hivemind-json-db-plugin",
+    "hivemind-json-db-plugin": {
+      "name": "clients",
+      "subfolder": "hivemind-core",
+      "password": "your-strong-passphrase"
+    }
+  }
+}
+```
+
+> **Warning**: There is no password recovery. If you lose the passphrase the database
+> is permanently unrecoverable. Back up the passphrase securely.
+
+An encrypted database cannot be opened without the passphrase. A plain database cannot
+be opened as encrypted. There is no automatic migration between the two modes.
+
+## Configuration reference
+
+| Key | Default | Description |
+|---|---|---|
+| `name` | `"clients"` | Base filename (without extension) for the JSON store. |
+| `subfolder` | `"hivemind-core"` | XDG subfolder under `$XDG_DATA_HOME`. |
+| `password` | `null` | When set, enables AES encryption via `EncryptedJsonStorageXDG`. |
 
 ## Schema migration
 
-The plugin overrides `AbstractDB.migrate()` to perform a one-shot
-`v1 -> v2` migration on first open:
+On first open after an upgrade, `JsonDB` runs an automatic one-shot schema migration
+that folds legacy `intent_blacklist` / `skill_blacklist` top-level keys into each
+record's `metadata` dict and purges the removed `message_blacklist` field.
 
-- Fold legacy top-level `intent_blacklist` / `skill_blacklist` keys into each
-  record's `metadata` dict (`setdefault`, so explicit metadata wins).
-- Purge `message_blacklist` outright — the field was removed from the `Client`
-  data model in `hivemind-plugin-manager`.
-- Track schema version in a sibling file (`<name>.schema_version`) next to the
-  JSON store, keeping the store's dict shape unchanged.
+The migration is idempotent and crash-safe. See [docs/migration.md](docs/migration.md)
+for full details.
 
-See [docs/migration.md](docs/migration.md) for details.
+To migrate an existing installation to this backend, use hivemind-core's built-in
+command with explicit `--from` and `--to` flags:
 
-## Why a separate repo?
+```bash
+hivemind-core migrate-db --from <current-backend-module> --to hivemind-json-db-plugin
+```
 
-Previously this plugin lived inside `json_database/hpm.py`. Extracting it gives
-the plugin its own release cadence (HiveMind-aligned, not OVOS-library-aligned),
-removes the `hivemind-plugin-manager` dependency from `json_database` for users
-who don't need it, and matches the per-backend repo layout used by the SQLite
-and Redis plugins.
+Running `hivemind-core migrate-db` with no flags does not migrate to this backend:
+the command defaults `--from` to `hivemind-json-db-plugin` and `--to` to
+`hivemind-sqlite-db-plugin`, which migrates away from it instead.
+
+## Docs
+
+- [docs/architecture.md](docs/architecture.md): internals, sentinel-file rationale, encrypted-store sentinel
+- [docs/migration.md](docs/migration.md): schema migration details, v1→v2, forcing a re-migration
+- [docs/configuration.md](docs/configuration.md): full configuration reference
+- [docs/operations.md](docs/operations.md): file locations, backup, restore, authoring a plugin
+- [docs/getting-started.md](docs/getting-started.md): install, activation, standalone use
+- [docs/api-reference.md](docs/api-reference.md): `JsonDB` method reference
+- [docs/troubleshooting.md](docs/troubleshooting.md): common failure modes
+- [docs/comparison.md](docs/comparison.md): choosing between JsonDB, SQLite, and Redis backends
+- [docs/contributing.md](docs/contributing.md): dev setup, conventions, release process
