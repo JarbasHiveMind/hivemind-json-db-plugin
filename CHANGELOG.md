@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.0.6a1](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.6a1) (2026-09-13)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.5a4...0.0.6a1)
+
+**Closed issues:**
+
+- allow-msg grant is silently reverted by the running server [\#33](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/issues/33)
+
+**Merged pull requests:**
+
+- fix: json-db commit no longer erases a concurrent consumer's write [\#34](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/34) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.0.5a4](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.5a4) (2026-09-07)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.5a3...0.0.5a4)
