@@ -75,7 +75,7 @@ def test_metadata_defaults_to_empty_when_missing(tmp_path, monkeypatch):
     """Clients added without a metadata dict get persisted with metadata={}."""
     db = make_db(tmp_path, monkeypatch)
     db.add_item(Client(client_id=1, api_key="k", name="a"))
-    assert db._db[1]["metadata"] == {}
+    assert db._db["1"]["metadata"] == {}
     found = db.search_by_value("api_key", "k")
     assert found[0].metadata == {}
 
@@ -173,6 +173,63 @@ def test_add_item_overwrites_metadata_for_same_client_id(tmp_path, monkeypatch):
     found = db.search_by_value("api_key", "k")
     assert len(found) == 1
     assert found[0].metadata == {"v": "new", "extra": "x"}
+
+
+# ---------------------------------------------------------------------------
+# id lookups survive a disk reload (JSON coerces object keys to strings)
+# ---------------------------------------------------------------------------
+
+
+def test_client_id_lookup_survives_reload(tmp_path, monkeypatch):
+    """After commit + reopen, the client is retrievable by client_id (JSON
+    coerces the dict key to a string on disk) and by api_key."""
+    db = make_db(tmp_path, monkeypatch)
+    db.add_item(make_client(client_id=1, api_key="k", name="a",
+                            metadata={"tier": "gold"}))
+    assert db.commit()
+
+    fresh = make_db(tmp_path, monkeypatch)
+    by_id = fresh.search_by_value("client_id", 1)
+    assert len(by_id) == 1
+    assert by_id[0].api_key == "k"
+    assert by_id[0].metadata == {"tier": "gold"}
+    assert fresh.get_client_by_id(1) is not None
+    assert fresh.get_client_by_id(1).api_key == "k"
+    # api_key path unaffected
+    assert len(fresh.search_by_value("api_key", "k")) == 1
+
+
+def test_update_after_reload_does_not_duplicate_row(tmp_path, monkeypatch):
+    """A write-back after reload must overwrite the reloaded (string-keyed)
+    row in place rather than inserting a second int-keyed row."""
+    db = make_db(tmp_path, monkeypatch)
+    db.add_item(make_client(client_id=1, api_key="k", name="a",
+                            metadata={"last_seen": 0}))
+    assert db.commit()
+
+    fresh = make_db(tmp_path, monkeypatch)
+    assert len(fresh) == 1
+    fresh.update_item(make_client(client_id=1, api_key="k", name="a",
+                                  metadata={"last_seen": 42}))
+
+    assert len(fresh) == 1
+    found = fresh.search_by_value("api_key", "k")
+    assert len(found) == 1
+    assert found[0].metadata == {"last_seen": 42}
+
+
+def test_two_clients_independently_retrievable_after_reload(tmp_path, monkeypatch):
+    """Negative control: distinct clients stay independently retrievable by
+    id after a reload."""
+    db = make_db(tmp_path, monkeypatch)
+    db.add_item(make_client(client_id=1, api_key="k1", name="a"))
+    db.add_item(make_client(client_id=2, api_key="k2", name="b"))
+    assert db.commit()
+
+    fresh = make_db(tmp_path, monkeypatch)
+    assert fresh.get_client_by_id(1).api_key == "k1"
+    assert fresh.get_client_by_id(2).api_key == "k2"
+    assert len(fresh) == 2
 
 
 # ---------------------------------------------------------------------------

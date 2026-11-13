@@ -28,7 +28,7 @@ Two files per database under the XDG path
 | `<name>.schema_version` | Out-of-band sentinel: one ASCII integer ("2") marking the current schema version. |
 
 The encrypted variant replaces `<name>.json` with a binary AES-GCM blob
-of the same logical content; `<name>.schema_version` stays plaintext.
+of the same logical content. `<name>.schema_version` stays plaintext.
 
 ### Record shape
 
@@ -59,14 +59,14 @@ Each value in the JSON object is the serialised form of a
 }
 ```
 
-The keys (`"1"`, `"2"`) are `client_id` as strings — JSON has no
+The keys (`"1"`, `"2"`) are `client_id` as strings. JSON has no
 integer keys, so this round-trip is unavoidable. Reads coerce back to
 int via `Client.__post_init__`.
 
 ## Schema-less round-trip
 
 `JsonDB.add_item` stores `copy.deepcopy(client.__dict__)` keyed by
-`client.client_id`. The deep copy is intentional — see [Aliasing
+`client.client_id`. The deep copy is intentional. See [Aliasing
 semantics](#aliasing-semantics) below.
 
 Because the store is the dict's `__dict__`, it is **schema-less from
@@ -90,10 +90,10 @@ dicts. Using it on both read paths keeps iteration tolerant of
 unexpected record shapes (e.g. a `Client` instance somehow ending up in
 storage during in-process mutation).
 
-`search_by_value("client_id", X)` is a direct `dict.get(X)` lookup —
-O(1). Every other key falls back to a linear scan over `dict.values()`
-— O(n). For workloads that need indexed lookups on arbitrary fields,
-this plugin is the wrong choice; see [Comparison](comparison.md).
+`search_by_value("client_id", X)` is a direct `dict.get(X)` lookup, which is
+O(1). Every other key falls back to a linear scan over `dict.values()`,
+which is O(n). For workloads that need indexed lookups on arbitrary fields,
+this plugin is the wrong choice. See [Comparison](comparison.md).
 
 ## Aliasing semantics
 
@@ -108,7 +108,7 @@ client = Client(client_id=1, api_key="k", metadata={"v": "before"})
 db.add_item(client)
 client.metadata["v"] = "after"   # mutate the same dict the store holds
 db.commit()
-# Stored record now reflects the post-add mutation — silent corruption.
+# Stored record now reflects the post-add mutation: silent corruption.
 ```
 
 The plugin defends against this by `copy.deepcopy(client.__dict__)` on
@@ -116,8 +116,8 @@ insert. A symmetric copy on read would be redundant: `cast2client`
 deserialises through `Client(**dict)`, which (because of the dataclass
 default factories) creates fresh list/dict instances anyway.
 
-The cost is one deepcopy per `add_item`. For Client records this is
-microseconds — not measurable against the JSON write itself.
+The cost is one deepcopy per `add_item`. For Client records this takes
+microseconds, not measurable against the JSON write itself.
 
 ## Writes and atomicity
 
@@ -135,7 +135,7 @@ temp file (`combo_lock` cleans up stale temps on next open).
 The schema-version sentinel is written separately, without atomic
 rename. If the process dies between the migration's `_db.store()` and
 `_write_schema_version()`, the disk has v2-shape data but a v1
-sentinel — on next open, `migrate()` runs again, finds no legacy keys,
+sentinel. On next open, `migrate()` runs again, finds no legacy keys,
 and exits cleanly. Idempotent by construction.
 
 ## Sentinel-file rationale
@@ -148,7 +148,7 @@ was chosen instead because:
   filter out the reserved key, in three places, forever.
 - The store's dict shape stays purely `client_id -> Client record`.
 - A two-line read function is cheaper than three filter sites.
-- For the encrypted variant, the sentinel stays plaintext — operators
+- For the encrypted variant, the sentinel stays plaintext, so operators
   can `cat` it for debugging without needing the password.
 
 The trade-off: one extra small file per database. Negligible.
@@ -170,3 +170,6 @@ JSON is a deliberate choice, not an accident:
 
 The drawbacks (whole-file rewrites, linear search, single-writer) are
 all consequences of the same choice. When they bite, switch backends.
+
+---
+[← Configuration](configuration.md) · [Home](README.md) · [API Reference →](api-reference.md)
