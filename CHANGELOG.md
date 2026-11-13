@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.7a2](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.7a2) (2026-11-13)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.7a1...0.0.7a2)
+
+**Merged pull requests:**
+
+- Update dependency python to 3.15 [\#37](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/37) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [0.0.7a1](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.7a1) (2026-11-13)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.6a1...0.0.7a1)
@@ -62,15 +70,15 @@
 
 ## [0.0.4a4](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a4) (2026-08-10)
 
-[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a6...0.0.4a4)
-
-## [0.0.4a6](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a6) (2026-08-10)
-
-[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a5...0.0.4a6)
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a5...0.0.4a4)
 
 ## [0.0.4a5](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a5) (2026-08-10)
 
-[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a3...0.0.4a5)
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a6...0.0.4a5)
+
+## [0.0.4a6](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a6) (2026-08-10)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a3...0.0.4a6)
 
 **Merged pull requests:**
 
