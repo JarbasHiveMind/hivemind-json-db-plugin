@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.7a1](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.7a1) (2026-11-13)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.6a1...0.0.7a1)
+
+**Merged pull requests:**
+
+- fix\(tests\): drop tests/\_\_init\_\_.py so build\_tests imports the wheel [\#36](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/36) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.0.6a1](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.6a1) (2026-09-13)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.5a4...0.0.6a1)
@@ -46,11 +54,15 @@
 
 ## [0.0.4a7](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a7) (2026-08-15)
 
-[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a6...0.0.4a7)
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a4...0.0.4a7)
 
 **Merged pull requests:**
 
 - docs: add AGENTS.md with per-repo agent conventions [\#23](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/pull/23) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.0.4a4](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a4) (2026-08-10)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a6...0.0.4a4)
 
 ## [0.0.4a6](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a6) (2026-08-10)
 
@@ -58,11 +70,7 @@
 
 ## [0.0.4a5](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a5) (2026-08-10)
 
-[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a4...0.0.4a5)
-
-## [0.0.4a4](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/tree/0.0.4a4) (2026-08-10)
-
-[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a3...0.0.4a4)
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-json-db-plugin/compare/0.0.4a3...0.0.4a5)
 
 **Merged pull requests:**
 
